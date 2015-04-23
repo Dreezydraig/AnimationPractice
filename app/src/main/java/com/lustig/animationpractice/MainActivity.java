@@ -3,18 +3,20 @@ package com.lustig.animationpractice;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Practicing with the Android Material Animations following the guide here:
  * https://developer.android.com/training/material/animations.html
  */
-
 
 public class MainActivity extends Activity {
 
@@ -28,17 +30,18 @@ public class MainActivity extends Activity {
     int mFinalRadius;
     int mInitialRadius;
 
-    Boolean isCardVisible = false;
+    Boolean isCardVisible = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.layout_activity_main);
+
+        // All manipulations are going to be done on this cool card
+        mView = findViewById(R.id.my_cool_card);
     }
 
     public void revealOrHideCard(View v) {
-
-        mView = findViewById(R.id.my_view);
 
         mCX = (mView.getLeft() + mView.getRight()) / 2;
         mCY = (mView.getTop() + mView.getBottom()) / 2;
@@ -104,10 +107,34 @@ public class MainActivity extends Activity {
             Log.d("Main", "Portrait");
         }
 
-//        Log.d("Landscape:", Configuration.ORIENTATION_LANDSCAPE + "");
-//        Log.d("Portrait:", Configuration.ORIENTATION_PORTRAIT + "");
-
-
         super.onConfigurationChanged(newConfig);
+    }
+
+    public void animateCard(View v) {
+
+        // If card is visible, animate to next activity
+        if (isCardVisible) {
+
+            Intent intent = new Intent(this, Activity2.class);
+
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, mView, "animatedCard");
+
+            startActivity(intent, options.toBundle());
+
+//            // Right now, we're just starting the activity. Let's attempt to animate the card
+//            startActivity(new Intent(this, Activity2.class));
+
+        // If card is invisible, we have nothing to animate... =\
+        } else {
+
+            Toast.makeText(
+                    this,
+                    "Where is the card?",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+        }
+
     }
 }

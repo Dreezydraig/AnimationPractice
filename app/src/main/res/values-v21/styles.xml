@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light">
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
 
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,8 +9,9 @@
         <!-- enable window content transitions -->
         <item name="android:windowContentTransitions">true</item>
 
-        <!-- specify enter and exit transitions -->
-        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
 
     </style>
 </resources>
